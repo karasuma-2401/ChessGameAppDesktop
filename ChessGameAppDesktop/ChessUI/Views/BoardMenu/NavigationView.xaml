@@ -1,0 +1,297 @@
+﻿<UserControl
+    x:Class="ChessUI.Views.BoardMenu.NavigationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ChessUI.Views.BoardMenu"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:ChessUI.Views.BoardMenu"
+    d:DesignHeight="700"
+    d:DesignWidth="200"
+    Background="Transparent"
+    mc:Ignorable="d">
+
+    <Border>
+        <Grid
+            x:Name="NavRootGrid"
+            Background="{DynamicResource Brush.Glass}"
+            Grid.IsSharedSizeScope="True"
+            RenderOptions.BitmapScalingMode="HighQuality">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button
+                        x:Name="LogoButton"
+                        Grid.Row="0"
+                        Click="LogoButton_Click"
+                        Style="{StaticResource LogoButton}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="IconRow" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="32"
+                                Height="32"
+                                Margin="0,10,10,0"
+                                RenderTransformOrigin="0.5,0.5"
+                                Source="/Assets/MenuAssets/logo.png">
+                                <Image.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Image.RenderTransform>
+
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                                To="30"
+                                                                Duration="0:0:0.15">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Width"
+                                                                To="32"
+                                                                Duration="0:0:0.15" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Height"
+                                                                To="32"
+                                                                Duration="0:0:0.15" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                                To="0"
+                                                                Duration="0:0:0.1" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Width"
+                                                                To="32"
+                                                                Duration="0:0:0.1" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Height"
+                                                                To="32"
+                                                                Duration="0:0:0.1" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock
+                                Grid.Row="1"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe UI"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource Brush.Text.Primary}"
+                                Text="MasterChess" />
+                        </Grid>
+                    </Button>
+
+                    <RadioButton
+                        x:Name="PlayButton"
+                        Grid.Row="1"
+                        VerticalAlignment="Center"
+                        Click="OnMenuButtonClick"
+                        CommandParameter="Play"
+                        GroupName="NavGroup"
+                        Style="{StaticResource NavButton}"
+                        Tag="White">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="IconColumn" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Grid.Column="0"
+                                Width="28"
+                                Height="28"
+                                Margin="0,0,10,0"
+                                Source="/Assets/MenuAssets/board.png">
+                                <Image.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        Direction="0"
+                                        Opacity="1"
+                                        ShadowDepth="0"
+                                        Color="Black" />
+                                </Image.Effect>
+                            </Image>
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe UI"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Text="Play" />
+                        </Grid>
+                    </RadioButton>
+
+                    <RadioButton
+                        x:Name="PuzzleButton"
+                        Grid.Row="2"
+                        VerticalAlignment="Center"
+                        Click="OnMenuButtonClick"
+                        CommandParameter="Puzzle"
+                        GroupName="NavGroup"
+                        Style="{StaticResource NavButton}"
+                        Tag="#FFB900">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="IconColumn" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Grid.Column="0"
+                                Width="28"
+                                Height="28"
+                                Margin="0,0,10,0"
+                                Source="/Assets/MenuAssets/puzzle.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe UI"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Text="Puzzle" />
+                        </Grid>
+                    </RadioButton>
+
+                    <RadioButton
+                        x:Name="LearnButton"
+                        Grid.Row="3"
+                        VerticalAlignment="Center"
+                        Click="OnMenuButtonClick"
+                        CommandParameter="Learn"
+                        GroupName="NavGroup"
+                        Style="{StaticResource NavButton}"
+                        Tag="#4CAF50">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="IconColumn" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Grid.Column="0"
+                                Width="28"
+                                Height="28"
+                                Margin="0,0,10,0"
+                                Source="/Assets/MenuAssets/learn.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe UI"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Text="Learn" />
+                        </Grid>
+                    </RadioButton>
+                </Grid>
+                <Popup
+                    x:Name="PlaySubMenu"
+                    AllowsTransparency="True"
+                    IsOpen="{Binding IsChecked, ElementName=PlayButton}"
+                    Placement="Right"
+                    PlacementTarget="{Binding ElementName=NavRootGrid}"
+                    StaysOpen="False">
+
+                    <local:PlayFlyoutMenu />
+                </Popup>
+                <Popup
+                    x:Name="PuzzleSubMenu"
+                    AllowsTransparency="True"
+                    IsOpen="{Binding IsChecked, ElementName=PuzzleButton}"
+                    Placement="Right"
+                    PlacementTarget="{Binding ElementName=NavRootGrid}"
+                    StaysOpen="False">
+
+                    <local:PuzzleFlyoutMenu />
+                </Popup>
+            </StackPanel>
+            <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
+                <Border
+                    Height="1"
+                    Margin="0,0"
+                    Background="#404040" />
+
+                <RadioButton
+                    x:Name="SettingsButton"
+                    VerticalAlignment="Center"
+                    Click="OnMenuButtonClick"
+                    CommandParameter="Settings"
+                    GroupName="NavGroup"
+                    Style="{StaticResource NavButton}"
+                    Tag="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="IconColumn" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image
+                            Grid.Column="0"
+                            Width="28"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            Source="/Assets/MenuAssets/setting.png">
+                            <Image.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="10"
+                                    Direction="0"
+                                    Opacity="1"
+                                    ShadowDepth="0"
+                                    Color="Black" />
+                            </Image.Effect>
+                        </Image>
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontFamily="Segoe UI"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Text="Settings" />
+                    </Grid>
+                </RadioButton>
+                <Popup
+                    x:Name="SettingsSubMenu"
+                    AllowsTransparency="True"
+                    IsOpen="{Binding IsChecked, ElementName=SettingsButton}"
+                    Placement="Right"
+                    PlacementTarget="{Binding ElementName=SettingsButton}"
+                    StaysOpen="False">
+                    <local:SettingsFlyoutMenu />
+                </Popup>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
